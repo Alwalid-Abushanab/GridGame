@@ -84,7 +84,6 @@ public class Tree {
 
             //make the parent node for these children (current node) invisible
             selectedNode.visible = false;
-            updateMap(selectedNode);
         }
     }
 
@@ -95,11 +94,9 @@ public class Tree {
         if(selectedNode.DEPTH != 1)//current block is not the first block in the tree
         {
             selectedNode.selected = false;
-            updateMap(selectedNode);
 
             selectedNode = selectedNode.PARENT;
             selectedNode.selected = true;
-            updateMap(selectedNode);
         }
     }
 
@@ -110,11 +107,9 @@ public class Tree {
         if(selectedNode.NW != null) //current block has children
         {
             selectedNode.selected = false;
-            updateMap(selectedNode);
 
             selectedNode = selectedNode.NW;
             selectedNode.selected = true;
-            updateMap(selectedNode);
         }
     }
 
@@ -126,32 +121,27 @@ public class Tree {
         {
             //change the status of the current block to not selected
             selectedNode.selected = false;
-            updateMap(selectedNode);
 
             //find which block was selected and move from there to the appropriate next block and change its status to selected.
             if(selectedNode.PARENT.NW == selectedNode)
             {
                 selectedNode = selectedNode.PARENT.SW;
                 selectedNode.selected = true;
-                updateMap(selectedNode);
             }
             else if(selectedNode.PARENT.NE == selectedNode)
             {
                 selectedNode = selectedNode.PARENT.NW;
                 selectedNode.selected = true;
-                updateMap(selectedNode);
             }
             else if(selectedNode.PARENT.SW == selectedNode)
             {
                 selectedNode = selectedNode.PARENT.SE;
                 selectedNode.selected = true;
-                updateMap(selectedNode);
             }
             else if(selectedNode.PARENT.SE == selectedNode)
             {
                 selectedNode = selectedNode.PARENT.NE;
                 selectedNode.selected = true;
-                updateMap(selectedNode);
             }
         }
     }
@@ -164,32 +154,27 @@ public class Tree {
         {
             //change the status of the current block to not selected
             selectedNode.selected = false;
-            updateMap(selectedNode);
 
             //find which block was selected and move from there to the appropriate next block and change its status to selected.
             if(selectedNode.PARENT.NW == selectedNode)
             {
                 selectedNode = selectedNode.PARENT.NE;
                 selectedNode.selected = true;
-                updateMap(selectedNode);
             }
             else if(selectedNode.PARENT.NE == selectedNode)
             {
                 selectedNode = selectedNode.PARENT.SE;
                 selectedNode.selected = true;
-                updateMap(selectedNode);
             }
             else if(selectedNode.PARENT.SW == selectedNode)
             {
                 selectedNode = selectedNode.PARENT.NW;
                 selectedNode.selected = true;
-                updateMap(selectedNode);
             }
             else if(selectedNode.PARENT.SE == selectedNode)
             {
                 selectedNode = selectedNode.PARENT.SW;
                 selectedNode.selected = true;
-                updateMap(selectedNode);
             }
         }
     }
@@ -212,19 +197,15 @@ public class Tree {
             //change the x and y coordinates of each of the blocks
             selectedNode.NW.x = selectedNode.x;
             selectedNode.NW.y = selectedNode.y + selectedNode.size/2;
-            updateMap(selectedNode.NW);
 
             selectedNode.NE.x = selectedNode.x + selectedNode.size/2;
             selectedNode.NE.y = selectedNode.y + selectedNode.size/2;
-            updateMap(selectedNode.NE);
 
             selectedNode.SE.x = selectedNode.x + selectedNode.size/2;
             selectedNode.SE.y = selectedNode.y;
-            updateMap(selectedNode.SE);
 
             selectedNode.SW.x = selectedNode.x;
             selectedNode.SW.y = selectedNode.y;
-            updateMap(selectedNode.SW);
 
             //recursively check if any of the children has children and flip them as well
             selectedNode = selectedNode.NW;
@@ -250,19 +231,15 @@ public class Tree {
             //change the x and y coordinates of each of the blocks
             selectedNode.NW.x = selectedNode.x + selectedNode.size/2;
             selectedNode.NW.y = selectedNode.y;
-            updateMap(selectedNode.NW);
 
             selectedNode.NE.x = selectedNode.x;
             selectedNode.NE.y = selectedNode.y;
-            updateMap(selectedNode.NE);
 
             selectedNode.SE.x = selectedNode.x;
             selectedNode.SE.y = selectedNode.y + selectedNode.size/2;
-            updateMap(selectedNode.SE);
 
             selectedNode.SW.x = selectedNode.x + selectedNode.size/2;
             selectedNode.SW.y = selectedNode.y + selectedNode.size/2;
-            updateMap(selectedNode.SW);
 
             //recursively check if any of the children has children and flip them as well
             selectedNode = selectedNode.NW;
@@ -302,19 +279,15 @@ public class Tree {
         {
             selectedNode.NW.x = selectedNode.x + selectedNode.size/2;
             selectedNode.NW.y = selectedNode.y;
-            updateMap(selectedNode.NW);
 
             selectedNode.NE.x = selectedNode.x + selectedNode.size/2;
             selectedNode.NE.y = selectedNode.y + selectedNode.size/2;
-            updateMap(selectedNode.NE);
 
             selectedNode.SE.x = selectedNode.x;
             selectedNode.SE.y = selectedNode.y + selectedNode.size/2;
-            updateMap(selectedNode.SE);
 
             selectedNode.SW.x = selectedNode.x;
             selectedNode.SW.y = selectedNode.y;
-            updateMap(selectedNode.SW);
         }
         else
         {
@@ -324,15 +297,12 @@ public class Tree {
 
             selectedNode.NE.x = selectedNode.x;
             selectedNode.NE.y = selectedNode.y;
-            updateMap(selectedNode.NE);
 
             selectedNode.SE.x = selectedNode.x + selectedNode.size/2;
             selectedNode.SE.y = selectedNode.y;
-            updateMap(selectedNode.SE);
 
             selectedNode.SW.x = selectedNode.x + selectedNode.size/2;
             selectedNode.SW.y = selectedNode.y + selectedNode.size/2;
-            updateMap(selectedNode.SW);
         }
 
         //recursively check if any of the children has children and flip them as well
@@ -433,9 +403,6 @@ public class Tree {
         selectedNode.SW = null;
         map.remove(selectedNode.SE);
         selectedNode.SE = null;
-
-        //update the map to reflect the changes
-        updateMap(selectedNode);
     }
 
     /**
@@ -484,7 +451,6 @@ public class Tree {
             if(elem.color == c && elem.visible) //the block has the same as the given color, and it is visible
             {
                 //check if it's on th diagonal
-
                 if(elem.x == elem.y)
                 {
                     score+= Math.round(elem.size * Math.sqrt(2));
@@ -509,6 +475,7 @@ public class Tree {
         //go through the map node by node and store them in an arraylist
         for(Node elem: map.keySet())
         {
+            updateMap(elem);
             list.add(map.get(elem));
         }
 
